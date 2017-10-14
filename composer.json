@@ -1,0 +1,53 @@
+{
+  "name": "genealabs/laravel-maps",
+  "description": "Laravel implementation of BIOSTALL's CodeIgniter Google Maps API, originally by Michael Hopkins at Appitventures.",
+  "license": "MIT",
+  "keywords": [
+    "laravel",
+    "phpgmaps",
+    "googlemaps",
+    "biostall"
+  ],
+  "authors": [
+    {
+      "name": "Mike Bronner",
+      "email": "mike@genealabs.com",
+      "role": "developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0",
+    "laravel/support": "5.5.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "GeneaLabs\\LaravelMaps\\": "src/"
+    }
+  },
+  "require-dev": {
+    "fzaninotto/faker": "~1.4",
+    "laravel/laravel": "5.5.*",
+    "mockery/mockery": "0.9.*",
+    "phpmd/phpmd": "^2.6",
+    "phpunit/phpunit": "6.*",
+    "satooshi/php-coveralls" : "dev-master@dev",
+    "sebastian/phpcpd": "*",
+    "laravel/browser-kit-testing": "^2.0"
+  },
+  "autoload-dev": {
+    "psr-4": {
+        "GeneaLabs\\LaravelMaps\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+      "laravel": {
+          "providers": [
+              "GeneaLabs\\LaravelMaps\\Providers\\Service"
+          ],
+          "aliases": {
+              "Map": "GeneaLabs\\LaravelMaps\\Facades\\Map"
+          }
+      }
+  },
+  "minimum-stability": "stable"
+}
