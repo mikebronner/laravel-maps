@@ -17,7 +17,10 @@
   ],
   "require": {
     "php": ">=7.0.0",
-    "laravel/support": "5.5.*"
+    "illuminate/support": "5.5.*"
+  },
+  "suggest": {
+    "geocoder-php/GeocoderLaravel": "If you need to geocode addresses and don't already have marker coordinates, use this package. It provides geocoding functionality optimized for Laravel."
   },
   "autoload": {
     "psr-4": {
