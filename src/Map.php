@@ -156,6 +156,27 @@ class Map
         #Log::info('debug', "Google Maps Class Initialized");
     }
 
+    public function create($center)
+    {
+        $gmapsConfig = [];
+        $gmapsConfig['center'] = $center->latitude . ', ' . $center->longitude;
+        $gmapsConfig['onboundschanged'] = "if ((typeof centreGot === 'undefined') || !centreGot) {
+            var mapCentre = map.getCenter();
+            marker_0.setOptions({
+                position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng())
+            });
+        }
+        centreGot = true;";
+        $this->initialize($gmapsConfig);
+        $gmapsMarker = [];
+        $gmapsMarker['position'] = $center->latitude . ', ' . $center->longitude;
+        $gmapsMarker['animation'] = 'DROP';
+        $gmapsMarker['highlightBackgroundColor'] = 'ff0000';
+        $this->add_marker($gmapsMarker);
+
+        return $this->create_map();
+    }
+
     public function initialize($config = array())
     {
         foreach ($config as $key => $val) {
