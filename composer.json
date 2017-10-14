@@ -22,9 +22,6 @@
   "suggest": {
     "geocoder-php/GeocoderLaravel": "If you need to geocode addresses and don't already have marker coordinates, use this package. It provides geocoding functionality optimized for Laravel."
   },
-  "replace": [
-    "genealabs/phpgmaps"
-  ],
   "autoload": {
     "psr-4": {
       "GeneaLabs\\LaravelMaps\\": "src/"
