@@ -7,7 +7,7 @@
 [![Packagist](https://img.shields.io/packagist/dt/GeneaLabs/laravel-maps.svg)](https://packagist.org/packages/genealabs/laravel-maps)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/GeneaLabs/laravel-maps/master/LICENSE)
 
-Easy - peasy - maps for Laravel
+**This package is the continuation of `GeneaLabs/Phpgmaps`. The move to the more appropriately name package namespace is in preparation for a complete rewrite of the package, optimizing it for Laravel.**
 
 # PhpGmaps
 This repo aims to keep appitventures/phpgmaps alive, hopefully filling in temporarily until they make their repo
