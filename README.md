@@ -1,4 +1,12 @@
 # laravel-maps
+[![Travis](https://img.shields.io/travis/GeneaLabs/laravel-maps.svg)](https://travis-ci.org/GeneaLabs/laravel-maps)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/7bf1ff51-919b-4d33-9673-8eb2d6b6348e.svg)](https://insight.sensiolabs.com/projects/7bf1ff51-919b-4d33-9673-8eb2d6b6348e)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/GeneaLabs/laravel-maps.svg)](https://scrutinizer-ci.com/g/GeneaLabs/laravel-maps)
+[![Coveralls](https://img.shields.io/coveralls/GeneaLabs/laravel-maps.svg)](https://coveralls.io/github/GeneaLabs/laravel-maps)
+[![GitHub (pre-)release](https://img.shields.io/github/release/GeneaLabs/laravel-maps/all.svg)](https://github.com/GeneaLabs/laravel-maps)
+[![Packagist](https://img.shields.io/packagist/dt/GeneaLabs/laravel-maps.svg)](https://packagist.org/packages/genealabs/laravel-maps)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/GeneaLabs/laravel-maps/master/LICENSE)
+
 Easy - peasy - maps for Laravel
 
 # PhpGmaps
@@ -11,12 +19,7 @@ Currently only Laravel 5.* is supported.
 ## Installation
 Add the repo to composer.json under this new namespace:
 ```sh
-composer require genealabs/phpgmaps
-```
-
-Then add the service provider entry to `config/app.php`:
-```php
-        'GeneaLabs\Phpgmaps\PhpgmapsServiceProvider',
+composer require genealabs/laravel-maps
 ```
 
 Add an environment variable with your Google Maps API Key in your `.env` file:
@@ -47,16 +50,16 @@ The following code will prompt the user for access to their geolocation and then
             }
             centreGot = true;';
 
-        Gmaps::initialize($config);
+        app('map')->initialize($config);
 
         // set up the marker ready for positioning
         // once we know the users location
         $marker = array();
-        Gmaps::add_marker($marker);
+        app('map')->add_marker($marker);
 
-        $map = Gmaps::create_map();
+        $map = app('map')->create_map();
         echo "<html><head><script type="text/javascript">var centreGot = false;</script>".$map['js']."</head><body>".$map['html']."</body></html>";
     });
 
 ### More Examples
-BIOINSTALL has a great website showing how to do all the things with the class. No reason to reinvent the wheel, so [here](http://biostall.com/demos/google-maps-v3-api-codeigniter-library/) it is. The only thing to note is that `$this->googlemaps` is now `Gmaps::`.
+BIOINSTALL has a great website showing how to do all the things with the class. No reason to reinvent the wheel, so [here](http://biostall.com/demos/google-maps-v3-api-codeigniter-library/) it is. The only thing to note is that `$this->googlemaps` is now either the facade `Map::` or the app variable `app('map')`.

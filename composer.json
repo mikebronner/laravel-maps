@@ -1,6 +1,6 @@
 {
   "name": "genealabs/laravel-maps",
-  "description": "Laravel implementation of BIOSTALL's CodeIgniter Google Maps API, originally by Michael Hopkins at Appitventures.",
+  "description": "Eay - peasy map integration for Laravel.",
   "license": "MIT",
   "keywords": [
     "laravel",
