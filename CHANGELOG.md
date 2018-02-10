@@ -1,5 +1,9 @@
 # Change Log
-## [0.5.0] - 2017-10-14
+## [0.5.1] - 10 Feb 2018
+### Added
+- Laravel 5.6 compatibility.
+
+## [0.5.0] - 14 Oct 2017
 ### Added
 - test stubs and required dependencies.
 - badges to README.
