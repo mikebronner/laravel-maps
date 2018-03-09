@@ -95,6 +95,7 @@ class Map
     public $styles = array();                    // An array of styles used to colour aspects of the map and turn points of interest on and off
     public $stylesAsMapTypes = false;                    // If applying styles, whether to apply them to the default map or add them as additional map types
     public $stylesAsMapTypesDefault = '';                        // If $stylesAsMapTypes is true the default style. Should contain the 'Name' of the style
+    public $tiledOverlayLayer = "";
     public $tilt = 0;                        // The angle of tilt. Currently only supports the values 0 and 45 in SATELLITE and HYBRID map types and at certain zoom levels
     public $trafficOverlay = false;                    // If set to TRUE will overlay traffic information onto the map by default
     public $version = "3";                        // Version of the API being used. Not currently used in the library
@@ -184,6 +185,43 @@ class Map
                 $this->$key = $val;
             }
         }
+    }
+
+    public function addOverlayLayer(string $tileOverlayFolderUrl)
+    {
+        if (! $tileOverlayFolderUrl) {
+            $this->tiledOverlayLayer = "";
+
+            return;
+        }
+
+        $this->tiledOverlayLayer = "var maptiler = new google.maps.ImageMapType({
+            getTileUrl: function(coord, zoom) {
+                var mapBounds = map.getBounds();
+                var mapMinZoom = 9;
+                var mapMaxZoom = 14;
+                var proj = map.getProjection();
+                var z2 = Math.pow(2, zoom);
+                var tileXSize = 256 / z2;
+                var tileYSize = 256 / z2;
+                var tileBounds = new google.maps.LatLngBounds(
+                    proj.fromPointToLatLng(new google.maps.Point(coord.x * tileXSize, (coord.y + 1) * tileYSize)),
+                    proj.fromPointToLatLng(new google.maps.Point((coord.x + 1) * tileXSize, coord.y * tileYSize))
+                );
+                var y = coord.y;
+                var x = coord.x >= 0 ? coord.x : z2 + coord.x
+                if (mapBounds.intersects(tileBounds)) {
+                    return \"{$tileOverlayFolderUrl}/\" + zoom + \"/\" + x + \"/\" + y + \".png\";
+                } else {
+                    return \"https://www.maptiler.com/img/none.png\";
+                }
+            },
+            tileSize: new google.maps.Size(256, 256),
+            isPng: true,
+            opacity: 1.0
+        });";
+
+        return;
     }
 
     public function add_marker($params = array())
@@ -1088,7 +1126,7 @@ class Map
     {
         $this->output_js = '';
         $this->output_js_contents = '';
-        $this->output_html = '';
+        $this->output_html = "";
 
         if ($this->maps_loaded == 0) {
             if ($this->apiKey != "") {
@@ -1372,6 +1410,11 @@ class Map
         $this->output_js_contents .= '};';
 
         $this->output_js_contents .=$this->map_name.' = new google.maps.Map(document.getElementById("'.$this->map_div_id.'"), myOptions);';
+
+        if ($this->tiledOverlayLayer) {
+            $this->output_js_contents .= "{$this->map_name}.overlayMapTypes.insertAt(0, maptiler);";
+        }
+
 
         if ($styleOutput != "") {
             $this->output_js_contents .= $styleOutput.'
@@ -2143,6 +2186,7 @@ class Map
 			window.onload = loadScript_'.$this->map_name.';
 			';
         } else {
+            $this->output_js_contents .= $this->tiledOverlayLayer;
             $this->output_js_contents .= '
 			google.maps.event.addDomListener(window, "load", initialize_'.$this->map_name.');
 			';
