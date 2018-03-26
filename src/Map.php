@@ -1133,9 +1133,9 @@ class Map
 
         if ($this->maps_loaded == 0) {
             if ($this->apiKey != "") {
-                $apiLocation = 'https://maps.googleapis.com/maps/api/js?key='.$this->apiKey.'&';
+                $apiLocation = 'https://maps.googleapis.com/maps/api/js?v=3&key='.$this->apiKey.'&';
             } else {
-                $apiLocation = 'https://maps.google.com/maps/api/js?';
+                $apiLocation = 'https://maps.google.com/maps/api/js?v=3&';
             }
             if ($this->region != "" && strlen($this->region) == 2) {
                 $apiLocation .= '&region='.strtoupper($this->region);
