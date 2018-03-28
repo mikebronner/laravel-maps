@@ -26,6 +26,7 @@ class Map
     public $clusterMinimumClusterSize = 2;                        // The minimum number of markers to be in a cluster before the markers are hidden and a count is shown
     public $clusterStyles = []; 				// (object) An array that has style properties: *  'url': (string) The image url. *  'height': (number) The image height. *  'width': (number) The image width. *  'anchor': (Array) The anchor position of the label text. *  'textColor': (string) The text color. *  'textSize': (number) The text size. *  'backgroundPosition': (string) The position of the backgound x, y.
     public $disableDefaultUI = false;                    // If set to TRUE will hide the default controls (ie. zoom, scale etc)
+    public $disableClickableIcons = false;
     public $disableDoubleClickZoom = false;                    // If set to TRUE will disable zooming when a double click occurs
     public $disableMapTypeControl = false;                    // If set to TRUE will hide the MapType control (ie. Map, Satellite, Hybrid, Terrain)
     public $disableNavigationControl = false;                    // If set to TRUE will hide the Navigation control (ie. zoom in/out, pan)
@@ -1288,6 +1289,10 @@ class Map
         if ($this->backgroundColor) {
             $this->output_js_contents .= ',
 					backgroundColor: \''.$this->backgroundColor.'\'';
+        }
+        if ($this->disableClickableIcons) {
+            $this->output_js_contents .= ',
+					clickableIcons: false';
         }
         if ($this->disableDefaultUI) {
             $this->output_js_contents .= ',
