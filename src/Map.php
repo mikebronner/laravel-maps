@@ -188,8 +188,13 @@ class Map
         }
     }
 
-    public function addOverlayLayer(string $tileOverlayFolderUrl)
-    {
+    public function addOverlayLayer(
+        string $tileOverlayFolderUrl,
+        float $latTopLeft,
+        float $longTopLeft,
+        float $latBottomRight,
+        float $longBottomRight
+    ) {
         if (! $tileOverlayFolderUrl) {
             return;
         }
@@ -198,7 +203,9 @@ class Map
 
         $this->tiledOverlayLayers[] = "var maptiler_{$index} = new google.maps.ImageMapType({
             getTileUrl: function(coord, zoom) {
-                var mapBounds = map.getBounds();
+                var mapBounds = new google.maps.LatLngBounds(
+                    new google.maps.LatLng({$latTopLeft}, {$longTopLeft}),
+                    new google.maps.LatLng({$latBottomRight}, {$longBottomRight}));
                 var mapMinZoom = 9;
                 var mapMaxZoom = 14;
                 var proj = map.getProjection();
