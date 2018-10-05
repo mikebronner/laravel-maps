@@ -1,4 +1,8 @@
 # Change Log
+## [0.5.7] - 5 Oct 2018
+### Added
+- Laravel 5.7 compatibility.
+
 ## [0.5.1] - 10 Feb 2018
 ### Added
 - Laravel 5.6 compatibility.
