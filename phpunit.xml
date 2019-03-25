@@ -10,7 +10,6 @@
     printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
     processIsolation="false"
     stopOnFailure="true"
-    syntaxCheck="true"
 >
 <testsuites>
     <testsuite name="Feature">

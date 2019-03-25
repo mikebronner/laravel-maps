@@ -5,7 +5,7 @@ use Orchestra\Database\ConsoleServiceProvider;
 
 trait CreatesApplication
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
