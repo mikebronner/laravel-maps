@@ -16,8 +16,8 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0",
-    "illuminate/support": "^5.5"
+    "php": ">=7.1.3",
+    "illuminate/support": "5.5 - 5.8"
   },
   "suggest": {
     "geocoder-php/GeocoderLaravel": "If you need to geocode addresses and don't already have marker coordinates, use this package. It provides geocoding functionality optimized for Laravel."
@@ -28,13 +28,12 @@
     }
   },
   "require-dev": {
-      "codedungeon/phpunit-result-printer": "*",
       "fzaninotto/faker": "*",
       "mockery/mockery": "*",
-      "orchestra/database": "3.8.x-dev@dev",
+      "orchestra/database": "3.8.*",
       "orchestra/testbench-browser-kit": "3.8.*",
       "orchestra/testbench-dusk": "3.8.*",
-      "orchestra/testbench": "3.8.*",
+      "orchestra/testbench": "3.8",
       "php-coveralls/php-coveralls" : "*",
       "phpmd/phpmd": "*",
       "phpunit/phpunit": "*",
