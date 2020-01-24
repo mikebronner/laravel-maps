@@ -270,6 +270,10 @@ class Map
         $marker['visible'] = true;                                // Defines if the marker is visible by default
         $marker['zIndex'] = '';                                    // The zIndex of the marker. If two markers overlap, the marker with the higher zIndex will appear on top
         $marker['label'] = '';                                    // The label of the marker.
+        $marker['label_color'] = '';                              // The color of the label text. Default color is black.
+        $marker['label_fontSize'] = '';                           // The font family of the label text (equivalent to the CSS font-family property).
+        $marker['label_fontFamily'] = '';                         // The font size of the label text (equivalent to the CSS font-size property). Default size is 14px.
+        $marker['label_fontWeight'] = '';                         // The font weight of the label text (equivalent to the CSS font-weight property).
 
         $marker_output = '';
 
@@ -379,7 +383,13 @@ class Map
         }
         if ($marker['label'] != "") {
             $marker_output .= ',
-				label: "'.$marker['label'].'"';
+            label: {
+                text: "'.$marker['label'].'",
+                color: "'.$marker['label_color'].'",
+                fontSize: "'.$marker['label_fontSize'].'",
+                fontFamily: "'.$marker['label_fontFamily'].'",
+                fontWeight: "'.$marker['label_fontWeight'].'"
+            }';
         }
 
 
