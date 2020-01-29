@@ -39,6 +39,7 @@ class Map
     public $https = false;                    // If set to TRUE will load the Google Maps JavaScript API over HTTPS, allowing you to utilize the API within your HTTPS secure application
     public $navigationControlPosition = '';                        // The position of the Navigation control, eg. 'BOTTOM_RIGHT'
     public $infowindowMaxWidth = 0;                        // The maximum width of the infowindow in pixels. Expecting an integer without units
+    public $infoAutoPan = false;                        //Disable auto-pan on open. By default, the info window will pan the map so that it is fully visible when it opens.
     public $keyboardShortcuts = true;                        // If set to FALSE will disable to map being controlled via the keyboard
     public $jsfile = '';                        // Set this to the path of an external JS file if you wish the JavaScript to be placed in a file rather than output directly into the <head></head> section. The library will try to create the file if it does not exist already. Please ensure the destination file is writeable
     public $kmlLayerURL = '';                        // A URL to publicly available KML or GeoRSS data for displaying geographic information. Multiple KML layers can be passed in by using an array of URL's. Note, if using multiple you'll probably have to set $kmlLayerPreserveViewport to true and manually set map center and zoom
@@ -270,6 +271,10 @@ class Map
         $marker['visible'] = true;                                // Defines if the marker is visible by default
         $marker['zIndex'] = '';                                    // The zIndex of the marker. If two markers overlap, the marker with the higher zIndex will appear on top
         $marker['label'] = '';                                    // The label of the marker.
+        $marker['label_color'] = '';                              // The color of the label text. Default color is black.
+        $marker['label_fontSize'] = '';                           // The font family of the label text (equivalent to the CSS font-family property).
+        $marker['label_fontFamily'] = '';                         // The font size of the label text (equivalent to the CSS font-size property). Default size is 14px.
+        $marker['label_fontWeight'] = '';                         // The font weight of the label text (equivalent to the CSS font-weight property).
 
         $marker_output = '';
 
@@ -379,7 +384,13 @@ class Map
         }
         if ($marker['label'] != "") {
             $marker_output .= ',
-				label: "'.$marker['label'].'"';
+            label: {
+                text: "'.$marker['label'].'",
+                color: "'.$marker['label_color'].'",
+                fontSize: "'.$marker['label_fontSize'].'",
+                fontFamily: "'.$marker['label_fontFamily'].'",
+                fontWeight: "'.$marker['label_fontWeight'].'"
+            }';
         }
 
 
@@ -1227,15 +1238,16 @@ class Map
         }
 
         $this->output_js_contents .= '
-			iw_'.$this->map_name.' = new google.maps.InfoWindow(';
+            iw_'.$this->map_name.' = new google.maps.InfoWindow({';
         if ($this->infowindowMaxWidth != 0) {
-            $this->output_js_contents .= '{
-				maxWidth: '.$this->infowindowMaxWidth.'
-			}';
+            $this->output_js_contents .= 'maxWidth: '.$this->infowindowMaxWidth.',';
         }
-        $this->output_js_contents .= ');
+        if ($this->infoAutoPan != false) {
+            $this->output_js_contents .= 'disableAutoPan: '.$this->infoAutoPan.',';
+        }
+        $this->output_js_contents .= '});
 
-				 ';
+                 ';
 
         $this->output_js_contents .= 'function initialize_'.$this->map_name.'() {
 
