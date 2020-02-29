@@ -3,6 +3,10 @@
 ### Added
 - Laravel 5.7 compatibility.
 
+## [0.6.0] - 2020-02-29
+### Added
+- Laravel 7 compatibility
+
 ## [0.5.1] - 10 Feb 2018
 ### Added
 - Laravel 5.6 compatibility.
