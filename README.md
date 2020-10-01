@@ -1,8 +1,6 @@
 # laravel-maps
 
-[![Join the chat at https://gitter.im/GeneaLabs/laravel-maps](https://badges.gitter.im/GeneaLabs/laravel-maps.svg)](https://gitter.im/GeneaLabs/laravel-maps?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Travis](https://img.shields.io/travis/GeneaLabs/laravel-maps.svg)](https://travis-ci.org/GeneaLabs/laravel-maps)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/7bf1ff51-919b-4d33-9673-8eb2d6b6348e.svg)](https://insight.sensiolabs.com/projects/7bf1ff51-919b-4d33-9673-8eb2d6b6348e)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/GeneaLabs/laravel-maps.svg)](https://scrutinizer-ci.com/g/GeneaLabs/laravel-maps)
 [![Coveralls](https://img.shields.io/coveralls/GeneaLabs/laravel-maps.svg)](https://coveralls.io/github/GeneaLabs/laravel-maps)
 [![GitHub (pre-)release](https://img.shields.io/github/release/GeneaLabs/laravel-maps/all.svg)](https://github.com/GeneaLabs/laravel-maps)
