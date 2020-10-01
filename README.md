@@ -10,8 +10,8 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/GeneaLabs/laravel-maps/master/LICENSE)
 
 ## Prerequisites
-- PHP >= 7.1.3
-- Laravel >= 5.5
+- PHP >= 7.3
+- Laravel >= 8.0
 
 **This package is the continuation of `GeneaLabs/Phpgmaps`. The move to the more appropriately-named package namespace is in preparation for a complete rewrite of the package, optimizing it for Laravel.**
 
@@ -19,8 +19,6 @@
 This repo aims to keep appitventures/phpgmaps alive, hopefully filling in temporarily until they make their repo
 available again, or else continuing its maintenance going forward and keeping it working with future versions of
 Laravel.
-
-Currently only Laravel 5.* is supported.
 
 ## Installation
 Add the repo to composer.json under this new namespace:
