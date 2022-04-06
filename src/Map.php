@@ -2306,7 +2306,7 @@ class Map
 	//utf8_encode($address) will return only english adress mean it's take only english address.
     	// Remove utf8_encode from urlencode then it'll support all languages(eg. en, ur, chinese, russian, japanese, greek etc.)
         // $data_location = "https://maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address)); //Old One just for english
-	    $data_location = "https://maps.google.com/maps/api/geocode/json?address=".urlencode($address); // New One for every language.
+	$data_location = "https://maps.google.com/maps/api/geocode/json?key=".urlencode($this->apiKey)."&address=".urlencode($address); // New One for every language.
         if ($this->region != "" && strlen($this->region) == 2) {
             $data_location .= "&region=".$this->region;
         }
