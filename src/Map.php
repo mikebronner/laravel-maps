@@ -148,9 +148,9 @@ class Map
     public $placesAutocompleteBoundsMap = false;                    // An alternative to setting the SW and NE bounds is to use the bounds of the current viewport. If set to TRUE, the bounds will be set to the viewport of the visible map, even if dragged or zoomed
     public $placesAutocompleteOnChange = '';                        // The JavaScript action to perform when a place is selected
     public $gestureHandling = 'auto';                                // Controls the panning and scrolling behavior of a map when viewed on a mobile device. greedy(allways moves on touch), cooperative(1 finger scroll 2 finger move), none(not pannable or pinchable), auto
+	public $placesAutocompleteOptionsAppend = '';
 
-
-    public function __construct($config = array())
+	public function __construct($config = array())
     {
         if (count($config) > 0) {
             $this->initialize($config);
@@ -1794,6 +1794,7 @@ class Map
                     $autocompleteOptions .= 'types: [\''.implode("','", $this->placesAutocompleteTypes).'\']';
                 }
                 $this->output_js_contents .= $autocompleteOptions;
+				if($this->placesAutocompleteOptionsAppend !== "") $this->output_js_contents .= $this->placesAutocompleteOptionsAppend;
                 $this->output_js_contents .= '}';
 
                 $this->output_js_contents .= '
@@ -2306,7 +2307,7 @@ class Map
 	//utf8_encode($address) will return only english adress mean it's take only english address.
     	// Remove utf8_encode from urlencode then it'll support all languages(eg. en, ur, chinese, russian, japanese, greek etc.)
         // $data_location = "https://maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address)); //Old One just for english
-	    $data_location = "https://maps.google.com/maps/api/geocode/json?address=".urlencode($address); // New One for every language.
+	$data_location = "https://maps.google.com/maps/api/geocode/json?key=".urlencode($this->apiKey)."&address=".urlencode($address); // New One for every language.
         if ($this->region != "" && strlen($this->region) == 2) {
             $data_location .= "&region=".$this->region;
         }
@@ -2334,7 +2335,7 @@ class Map
                 if ($attempts < 2) {
                     sleep(1);
                     ++$attempts;
-                    list($lat, $lng, $error) = $this->get_lat_long_from_address($address, $attempts);
+                    [$lat, $lng, $error] = $this->get_lat_long_from_address($address, $attempts);
                 }
             }
         }
