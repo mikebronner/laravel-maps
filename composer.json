@@ -33,7 +33,7 @@
     "php-coveralls/php-coveralls" : "*",
     "phpmd/phpmd": "^2.7",
     "phpunit/phpunit": "^9.0",
-    "sebastian/phpcpd": "^5.0",
+    "sebastian/phpcpd": "^6.0",
     "symfony/thanks": "^1.2"
   },
   "autoload-dev": {
