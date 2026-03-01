@@ -13,10 +13,10 @@
 | PHP | Laravel | Support |
 |-----|---------|---------|
 | 8.1 | 8.x – 10.x | ✅ |
-| 8.2 | 8.x – 12.x | ✅ |
-| 8.3 | 8.x – 12.x | ✅ |
-| 8.4 | 8.x – 12.x | ✅ |
-| 8.5 | 8.x – 12.x | ✅ |
+| 8.2 | 9.x – 12.x | ✅ |
+| 8.3 | 10.x – 12.x | ✅ |
+| 8.4 | 10.x – 12.x | ✅ |
+| 8.5 | 10.x – 12.x | ✅ |
 
 **This package is the continuation of `GeneaLabs/Phpgmaps`. The move to the more appropriately-named package namespace is in preparation for a complete rewrite of the package, optimizing it for Laravel.**
 
