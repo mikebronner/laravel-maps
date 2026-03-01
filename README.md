@@ -1,15 +1,22 @@
 # laravel-maps
 
-[![Travis](https://img.shields.io/travis/GeneaLabs/laravel-maps.svg)](https://travis-ci.org/GeneaLabs/laravel-maps)
-[![Scrutinizer](https://img.shields.io/scrutinizer/g/GeneaLabs/laravel-maps.svg)](https://scrutinizer-ci.com/g/GeneaLabs/laravel-maps)
-[![Coveralls](https://img.shields.io/coveralls/GeneaLabs/laravel-maps.svg)](https://coveralls.io/github/GeneaLabs/laravel-maps)
 [![GitHub (pre-)release](https://img.shields.io/github/release/GeneaLabs/laravel-maps/all.svg)](https://github.com/GeneaLabs/laravel-maps)
 [![Packagist](https://img.shields.io/packagist/dt/GeneaLabs/laravel-maps.svg)](https://packagist.org/packages/genealabs/laravel-maps)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/GeneaLabs/laravel-maps/master/LICENSE)
 
 ## Prerequisites
-- PHP >= 7.3
+- PHP >= 8.1
 - Laravel >= 8.0
+
+## Version Support Matrix
+
+| PHP | Laravel | Support |
+|-----|---------|---------|
+| 8.1 | 8.x – 10.x | ✅ |
+| 8.2 | 8.x – 12.x | ✅ |
+| 8.3 | 8.x – 12.x | ✅ |
+| 8.4 | 8.x – 12.x | ✅ |
+| 8.5 | 8.x – 12.x | ✅ |
 
 **This package is the continuation of `GeneaLabs/Phpgmaps`. The move to the more appropriately-named package namespace is in preparation for a complete rewrite of the package, optimizing it for Laravel.**
 
