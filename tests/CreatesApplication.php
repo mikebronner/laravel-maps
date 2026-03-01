@@ -1,26 +1,13 @@
 <?php namespace GeneaLabs\LaravelMaps\Tests;
 
-use GeneaLabs\LaravelModelCaching\Providers\Service as LaravelModelCachingService;
-use Orchestra\Database\ConsoleServiceProvider;
+use GeneaLabs\LaravelMaps\Providers\Service;
 
 trait CreatesApplication
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->withFactories(__DIR__ . '/database/factories');
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
-    }
-
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
-            LaravelModelCachingService::class,
-            ConsoleServiceProvider::class,
+            Service::class,
         ];
     }
 }

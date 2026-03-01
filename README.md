@@ -7,9 +7,18 @@
 [![Packagist](https://img.shields.io/packagist/dt/GeneaLabs/laravel-maps.svg)](https://packagist.org/packages/genealabs/laravel-maps)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/GeneaLabs/laravel-maps/master/LICENSE)
 
+## Version Support
+
+| Laravel | PHP |
+|---------|-----|
+| 10.x    | 8.2, 8.3, 8.4, 8.5 |
+| 11.x    | 8.2, 8.3, 8.4, 8.5 |
+| 12.x    | 8.2, 8.3, 8.4, 8.5 |
+| 13.x    | 8.3, 8.4, 8.5 |
+
 ## Prerequisites
-- PHP >= 7.3
-- Laravel >= 8.0
+- PHP >= 8.2
+- Laravel >= 10.0
 
 **This package is the continuation of `GeneaLabs/Phpgmaps`. The move to the more appropriately-named package namespace is in preparation for a complete rewrite of the package, optimizing it for Laravel.**
 
