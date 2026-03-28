@@ -1,4 +1,21 @@
 # Change Log
+## [0.8.0] - 2026-03-28
+### Added
+- Laravel 11, 12, and 13 support.
+- PHP 8.2, 8.3, 8.4, and 8.5 support.
+- GitHub Actions CI workflow.
+- Unit tests for service provider registration.
+
+### Changed
+- Modernized PHPUnit configuration for PHPUnit 11.
+- Modernized service provider (removed deprecated `$defer` and `provides()`).
+- Migrated from Travis CI to GitHub Actions.
+
+### Removed
+- Laravel 10 and earlier support.
+- PHP 8.1 and earlier support.
+- Unused BrowserKit/Dusk test infrastructure.
+
 ## [0.7.0] - 2020-02-29
 ### Added
 - Laravel 7 compatibility
