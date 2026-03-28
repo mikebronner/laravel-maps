@@ -5,6 +5,7 @@
     colors="true"
     processIsolation="false"
     stopOnFailure="true"
+    cacheDirectory=".phpunit.cache"
 >
     <testsuites>
         <testsuite name="Unit">
