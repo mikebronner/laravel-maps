@@ -12,6 +12,13 @@ class MapTest extends UnitTestCase
         $this->assertInstanceOf(Map::class, $map);
     }
 
+    public function test_map_can_be_instantiated_with_config(): void
+    {
+        $map = new Map(['apiKey' => 'test-key']);
+
+        $this->assertSame('test-key', $map->apiKey);
+    }
+
     public function test_map_can_be_resolved_from_container(): void
     {
         $map = app('map');
@@ -19,20 +26,36 @@ class MapTest extends UnitTestCase
         $this->assertInstanceOf(Map::class, $map);
     }
 
-    public function test_map_can_be_initialized_with_config(): void
+    public function test_map_has_default_center(): void
     {
-        $map = new Map(['center' => '40.7128, -74.0060']);
+        $map = new Map();
+
+        $this->assertSame('37.4419, -122.1419', $map->center);
+    }
+
+    public function test_map_can_initialize_with_config(): void
+    {
+        $map = new Map();
+        $map->initialize(['center' => '40.7128, -74.0060']);
 
         $this->assertSame('40.7128, -74.0060', $map->center);
     }
 
-    public function test_map_creates_output(): void
+    public function test_map_can_create_map_output(): void
     {
-        $map = new Map();
+        $map = new Map(['apiKey' => 'test-key']);
+        $map->initialize(['center' => '37.4419, -122.1419']);
         $output = $map->create_map();
 
-        $this->assertIsArray($output);
         $this->assertArrayHasKey('js', $output);
         $this->assertArrayHasKey('html', $output);
+    }
+
+    public function test_map_handles_empty_config(): void
+    {
+        $map = new Map([]);
+
+        $this->assertInstanceOf(Map::class, $map);
+        $this->assertSame('', $map->apiKey);
     }
 }

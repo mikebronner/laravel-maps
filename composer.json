@@ -1,51 +1,51 @@
 {
-  "name": "genealabs/laravel-maps",
-  "description": "Easy-peasy map integration for Laravel.",
-  "license": "MIT",
-  "keywords": [
-    "laravel",
-    "phpgmaps",
-    "googlemaps",
-    "biostall"
-  ],
-  "authors": [
-    {
-      "name": "Mike Bronner",
-      "email": "mike@genealabs.com",
-      "role": "developer"
-    }
-  ],
-  "require": {
-    "php": "^8.2",
-    "illuminate/support": "^10.0|^11.0|^12.0|^13.0"
-  },
-  "suggest": {
-    "geocoder-php/GeocoderLaravel": "If you need to geocode addresses and don't already have marker coordinates, use this package. It provides geocoding functionality optimized for Laravel."
-  },
-  "autoload": {
-    "psr-4": {
-      "GeneaLabs\\LaravelMaps\\": "src/"
-    }
-  },
-  "require-dev": {
-    "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
-    "phpunit/phpunit": "^10.0|^11.0"
-  },
-  "autoload-dev": {
-    "psr-4": {
-        "GeneaLabs\\LaravelMaps\\Tests\\": "tests/"
-    }
-  },
-  "extra": {
-      "laravel": {
-          "providers": [
-              "GeneaLabs\\LaravelMaps\\Providers\\Service"
-          ],
-          "aliases": {
-              "Map": "GeneaLabs\\LaravelMaps\\Facades\\Map"
-          }
-      }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "name": "genealabs/laravel-maps",
+    "description": "Easy-peasy map integration for Laravel.",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "phpgmaps",
+        "googlemaps",
+        "biostall"
+    ],
+    "authors": [
+        {
+            "name": "Mike Bronner",
+            "email": "mike@genealabs.com",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0|^12.0|^13.0"
+    },
+    "suggest": {
+        "geocoder-php/GeocoderLaravel": "If you need to geocode addresses and don't already have marker coordinates, use this package. It provides geocoding functionality optimized for Laravel."
+    },
+    "autoload": {
+        "psr-4": {
+            "GeneaLabs\\LaravelMaps\\": "src/"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0|^11.0",
+        "phpunit/phpunit": "^10.0|^11.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GeneaLabs\\LaravelMaps\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "GeneaLabs\\LaravelMaps\\Providers\\Service"
+            ],
+            "aliases": {
+                "Map": "GeneaLabs\\LaravelMaps\\Facades\\Map"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
