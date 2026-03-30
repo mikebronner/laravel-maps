@@ -402,9 +402,13 @@ class Map
 
         if ($marker['infowindow_content'] != "") {
 
-            // Escape any quotes in the event that HTML is being added to the infowindow
+            // Escape content for safe embedding in a JS string literal
             $marker['infowindow_content'] = str_replace('\"', '"', $marker['infowindow_content']);
+            $marker['infowindow_content'] = str_replace('\\', '\\\\', $marker['infowindow_content']);
             $marker['infowindow_content'] = str_replace('"', '\"', $marker['infowindow_content']);
+            $marker['infowindow_content'] = str_replace("\r\n", '\n', $marker['infowindow_content']);
+            $marker['infowindow_content'] = str_replace("\r", '\n', $marker['infowindow_content']);
+            $marker['infowindow_content'] = str_replace("\n", '\n', $marker['infowindow_content']);
 
             $marker_output .= '
 			marker_'.$marker_id.'.set("content", "'.$marker['infowindow_content'].'");
@@ -1237,8 +1241,9 @@ class Map
 			';
         }
 
-        $this->output_js_contents .= '
-            iw_'.$this->map_name.' = new google.maps.InfoWindow({';
+        $this->output_js_contents .= 'function initialize_'.$this->map_name.'() {
+
+                iw_'.$this->map_name.' = new google.maps.InfoWindow({';
         if ($this->infowindowMaxWidth != 0) {
             $this->output_js_contents .= 'maxWidth: '.$this->infowindowMaxWidth.',';
         }
@@ -1246,10 +1251,6 @@ class Map
             $this->output_js_contents .= 'disableAutoPan: '.$this->infoAutoPan.',';
         }
         $this->output_js_contents .= '});
-
-                 ';
-
-        $this->output_js_contents .= 'function initialize_'.$this->map_name.'() {
 
 				';
 
@@ -1436,6 +1437,13 @@ class Map
 
         $this->output_js_contents .= '};';
         $this->output_js_contents .= $this->map_name .' = new google.maps.Map(document.getElementById("'.$this->map_div_id.'"), myOptions);';
+
+        // Close any open InfoWindow when clicking on the map
+        $this->output_js_contents .= '
+            google.maps.event.addListener('.$this->map_name.', "click", function() {
+                iw_'.$this->map_name.'.close();
+            });
+        ';
 
         if (count($this->tiledOverlayLayers)) {
             foreach ($this->tiledOverlayLayers as $index => $javascript) {
