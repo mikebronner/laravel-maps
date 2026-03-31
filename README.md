@@ -68,5 +68,34 @@ The following code will prompt the user for access to their geolocation and then
         echo "<html><head><script type="text/javascript">var centreGot = false;</script>".$map['js']."</head><body>".$map['html']."</body></html>";
     });
 
+### MultiPolygon from GeoJSON
+To render a [GeoJSON MultiPolygon](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.7), decode the JSON and call `add_polygon()` once per polygon in the collection:
+
+```php
+Route::get('/multipolygon', function () {
+    $geojson = json_decode($geojsonString); // your GeoJSON MultiPolygon
+
+    $config = ['center' => '-6.2, 106.8', 'zoom' => 10];
+    app('map')->initialize($config);
+
+    foreach ($geojson->coordinates as $polygon) {
+        $points = [];
+
+        // Each polygon may have an outer ring and optional holes — use the outer ring (index 0)
+        foreach ($polygon[0] as $coord) {
+            $points[] = $coord[1] . ', ' . $coord[0]; // GeoJSON is [lng, lat]; the library expects "lat, lng"
+        }
+
+        app('map')->add_polygon(['points' => $points]);
+    }
+
+    $map = app('map')->create_map();
+
+    return '<html><head>' . $map['js'] . '</head><body>' . $map['html'] . '</body></html>';
+});
+```
+
+> **Note:** GeoJSON coordinates use `[longitude, latitude]` order, but this library expects `"latitude, longitude"` strings. The example above swaps them accordingly.
+
 ### More Examples
 BIOINSTALL has a great website showing how to do all the things with the class. No reason to reinvent the wheel, so [here](http://biostall.com/demos/google-maps-v3-api-codeigniter-library/) it is. The only thing to note is that `$this->googlemaps` is now either the facade `Map::` or the app variable `app('map')`.
