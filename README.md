@@ -68,5 +68,150 @@ The following code will prompt the user for access to their geolocation and then
         echo "<html><head><script type="text/javascript">var centreGot = false;</script>".$map['js']."</head><body>".$map['html']."</body></html>";
     });
 
+### Custom Overlay Popup
+You can create a custom overlay popup that appears automatically (without requiring a click or hover) by using the `onload` configuration option together with the Google Maps JavaScript API [custom popup example](https://developers.google.com/maps/documentation/javascript/examples/overlay-popup).
+
+The approach has two parts:
+1. Define a custom `Popup` overlay class in a separate `<script>` tag.
+2. Use the `onload` option to instantiate the popup once the map finishes loading.
+
+```php
+Route::get('/popup', function () {
+    $lat = 37.4419;
+    $lng = -122.1419;
+
+    $config = [
+        'center' => "{$lat}, {$lng}",
+        'zoom' => 13,
+        'onload' => "
+            var position = new google.maps.LatLng({$lat}, {$lng});
+            var popup = new Popup(position, document.getElementById('popup-content'));
+            popup.setMap(map);
+        ",
+    ];
+
+    app('map')->initialize($config);
+
+    $map = app('map')->create_map();
+
+    $popupScript = <<<'JS'
+    <script>
+    class Popup extends google.maps.OverlayView {
+        constructor(position, content) {
+            super();
+            this.position = position;
+            content.classList.add("popup-bubble");
+
+            var container = document.createElement("div");
+            container.classList.add("popup-container");
+            container.appendChild(content);
+
+            this.anchor = document.createElement("div");
+            this.anchor.classList.add("popup-anchor");
+            this.anchor.appendChild(container);
+
+            this.stopEventPropagation();
+        }
+
+        onAdd() {
+            this.getPanes().floatPane.appendChild(this.anchor);
+        }
+
+        onRemove() {
+            if (this.anchor.parentElement) {
+                this.anchor.parentElement.removeChild(this.anchor);
+            }
+        }
+
+        draw() {
+            var divPosition = this.getProjection().fromLatLngToDivPixel(this.position);
+            var display = Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000
+                ? "block"
+                : "none";
+
+            if (display === "block") {
+                this.anchor.style.left = divPosition.x + "px";
+                this.anchor.style.top = divPosition.y + "px";
+            }
+
+            if (this.anchor.style.display !== display) {
+                this.anchor.style.display = display;
+            }
+        }
+
+        stopEventPropagation() {
+            var anchor = this.anchor;
+            anchor.style.cursor = "auto";
+
+            ["click", "dblclick", "contextmenu", "wheel", "mousedown",
+             "mouseup", "mouseover", "mouseout", "touchstart", "touchend",
+             "touchmove"].forEach(function (event) {
+                anchor.addEventListener(event, function (e) {
+                    e.stopPropagation();
+                });
+            });
+        }
+    }
+    </script>
+    JS;
+
+    $popupStyles = <<<'CSS'
+    <style>
+    .popup-container {
+        cursor: auto;
+        position: absolute;
+        width: 200px;
+        transform: translate(-50%, -100%);
+    }
+    .popup-bubble {
+        background-color: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        font-family: sans-serif;
+        font-size: 14px;
+        overflow-y: auto;
+        max-height: 200px;
+    }
+    .popup-anchor {
+        position: absolute;
+        width: 100%;
+    }
+    </style>
+    CSS;
+
+    return "<html><head>"
+        . $popupStyles
+        . $map['js']
+        . $popupScript
+        . "</head><body>"
+        . '<div id="popup-content" style="display:none;">Hello from a custom popup!</div>'
+        . $map['html']
+        . "</body></html>";
+});
+```
+
+The `onload` JavaScript runs after the map initializes, so the `map` variable is available. The `Popup` class extends `google.maps.OverlayView` and positions custom HTML at a given lat/lng coordinate. The popup appears immediately without any user interaction.
+
+You can also use the `infowindow_content` marker option for simpler popups that open on click:
+
+```php
+$marker = [
+    'position' => '37.4419, -122.1419',
+    'infowindow_content' => '<strong>Hello!</strong><br>This popup opens on click.',
+];
+app('map')->add_marker($marker);
+```
+
+To auto-open a standard info window without a click, use the `onload` option:
+
+```php
+$config = [
+    'center' => '37.4419, -122.1419',
+    'zoom' => 13,
+    'onload' => 'google.maps.event.trigger(marker_0, "click");',
+];
+```
+
 ### More Examples
 BIOINSTALL has a great website showing how to do all the things with the class. No reason to reinvent the wheel, so [here](http://biostall.com/demos/google-maps-v3-api-codeigniter-library/) it is. The only thing to note is that `$this->googlemaps` is now either the facade `Map::` or the app variable `app('map')`.
