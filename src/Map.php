@@ -1155,11 +1155,15 @@ class Map
         $this->output_html = "";
 
         if ($this->maps_loaded == 0) {
-            if ($this->apiKey != "") {
-                $apiLocation = 'https://maps.googleapis.com/maps/api/js?v=3&key='.$this->apiKey.'&';
-            } else {
-                $apiLocation = 'https://maps.google.com/maps/api/js?v=3&';
+            if ($this->apiKey == "") {
+                throw new \RuntimeException(
+                    'A Google Maps API key is required. Set it via config("services.google.maps.api-key") '
+                    . 'or pass "apiKey" when initializing the map. '
+                    . 'Get a key at https://console.cloud.google.com/apis/credentials'
+                );
             }
+
+            $apiLocation = 'https://maps.googleapis.com/maps/api/js?v=weekly&key='.$this->apiKey.'&';
             if ($this->region != "" && strlen($this->region) == 2) {
                 $apiLocation .= '&region='.strtoupper($this->region);
             }
@@ -1572,13 +1576,13 @@ class Map
         if ($this->center == "auto") { // if wanting to center on the users location
             $this->output_js_contents .= '
 				// Try W3C Geolocation (Preferred)
-				if(navigator.geolocation) {
+				if(window.isSecureContext && navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function(position) {
 						'.$this->map_name.'.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 					}, function() { alert("Unable to get your current position. Please try again. Geolocation service failed."); });
-				// Browser doesn\'t support Geolocation
+				// Browser doesn\'t support Geolocation or not on HTTPS
 				}else{
-					alert(\'Your browser does not support geolocation.\');
+					console.warn(\'Geolocation requires a secure origin (HTTPS). See https://goo.gl/rStTGz\');
 				}
 			';
         }
@@ -2036,42 +2040,42 @@ class Map
                 // Both start and finish are at the users current location
                 $this->output_js_contents .= '
 				// Try W3C Geolocation (Preferred)
-				if(navigator.geolocation) {
+				if(window.isSecureContext && navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function(position) {
 						start = position.coords.latitude+","+position.coords.longitude;
 						calcRoute(start, start);
 					}, function() { alert("Unable to get your current position. Please try again. Geolocation service failed."); });
-				// Browser doesn\'t support Geolocation
+				// Browser doesn\'t support Geolocation or not on HTTPS
 				}else{
-					alert(\'Your browser does not support geolocation.\');
+					console.warn(\'Geolocation requires a secure origin (HTTPS). See https://goo.gl/rStTGz\');
 				}
 				';
             } elseif ($this->directionsStart == "auto") {
                 // The start point should be at the users current location
                 $this->output_js_contents .= '
 				// Try W3C Geolocation (Preferred)
-				if(navigator.geolocation) {
+				if(window.isSecureContext && navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function(position) {
 						start = position.coords.latitude+","+position.coords.longitude;
 						calcRoute(start, \''.$this->directionsEnd.'\');
 					}, function() { alert("Unable to get your current position. Please try again. Geolocation service failed."); });
-				// Browser doesn\'t support Geolocation
+				// Browser doesn\'t support Geolocation or not on HTTPS
 				}else{
-					alert(\'Your browser does not support geolocation.\');
+					console.warn(\'Geolocation requires a secure origin (HTTPS). See https://goo.gl/rStTGz\');
 				}
 				';
             } elseif ($this->directionsEnd == "auto") {
                 // The end point should be at the users current location
                 $this->output_js_contents .= '
 				// Try W3C Geolocation (Preferred)
-				if(navigator.geolocation) {
+				if(window.isSecureContext && navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function(position) {
 						end = position.coords.latitude+","+position.coords.longitude;
 						calcRoute(\''.$this->directionsStart.'\', end);
 					}, function() { alert("Unable to get your current position. Please try again. Geolocation service failed."); });
-				// Browser doesn\'t support Geolocation
+				// Browser doesn\'t support Geolocation or not on HTTPS
 				}else{
-					alert(\'Your browser does not support geolocation.\');
+					console.warn(\'Geolocation requires a secure origin (HTTPS). See https://goo.gl/rStTGz\');
 				}
 				';
             } else {

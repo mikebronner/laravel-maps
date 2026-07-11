@@ -58,4 +58,68 @@ class MapTest extends UnitTestCase
         $this->assertInstanceOf(Map::class, $map);
         $this->assertSame('', $map->apiKey);
     }
+
+    public function test_create_map_throws_exception_without_api_key(): void
+    {
+        $map = new Map();
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('A Google Maps API key is required');
+
+        $map->create_map();
+    }
+
+    public function test_create_map_uses_weekly_api_version(): void
+    {
+        $map = new Map(['apiKey' => 'test-key']);
+        $output = $map->create_map();
+
+        $this->assertStringContainsString('v=weekly', $output['js']);
+        $this->assertStringNotContainsString('v=3', $output['js']);
+    }
+
+    public function test_create_map_uses_correct_api_domain(): void
+    {
+        $map = new Map(['apiKey' => 'test-key']);
+        $output = $map->create_map();
+
+        $this->assertStringContainsString(
+            'https://maps.googleapis.com/maps/api/js',
+            $output['js']
+        );
+    }
+
+    public function test_create_map_includes_api_key_in_script(): void
+    {
+        $map = new Map(['apiKey' => 'my-test-key-123']);
+        $output = $map->create_map();
+
+        $this->assertStringContainsString('key=my-test-key-123', $output['js']);
+    }
+
+    public function test_geolocation_checks_secure_context(): void
+    {
+        $map = new Map(['apiKey' => 'test-key']);
+        $map->initialize(['center' => 'auto']);
+        $output = $map->create_map();
+
+        $this->assertStringContainsString('window.isSecureContext', $output['js']);
+        $this->assertStringContainsString(
+            'Geolocation requires a secure origin',
+            $output['js']
+        );
+    }
+
+    public function test_directions_geolocation_checks_secure_context(): void
+    {
+        $map = new Map(['apiKey' => 'test-key']);
+        $map->initialize([
+            'directions' => true,
+            'directionsStart' => 'auto',
+            'directionsEnd' => 'some destination',
+        ]);
+        $output = $map->create_map();
+
+        $this->assertStringContainsString('window.isSecureContext', $output['js']);
+    }
 }
